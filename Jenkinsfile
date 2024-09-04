@@ -1,48 +1,46 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'JDK-21' 
+    }
+
     stages {
+       
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/nawaf83/hello-world-java1.git'
+                git branch: 'main', url: 'https://github.com/imcy82/springbootcart.git'
             }
         }
+
+   
         stage('Build') {
             steps {
-
-                        powershell 'gradle clean build'
-                
+                powershell 'mvn package' // Runs the Maven package command to compile the project and package it into a JAR
             }
         }
+
+ 
         stage('Test') {
             steps {
-                
-                        powershell 'gradle test'
-                  
+                powershell 'mvn test' // Runs the Maven test command to execute unit tests
             }
         }
+
+
         stage('Deploy') {
-            steps {                
-                        powershell 'java -jar build/libs/hello-world-java-V1.jar'
-                 }           
+            steps {
+                script {
+                    sh 'docker build -t shopping-cart:latest .'
+                    
+                    sh '''
+                        docker run -d \
+                        --name shopping-cart \
+                        -p 8070:8070 \
+                        shopping-cart:latest
+                    '''
+                }
+            }
         }
-    
+    }
 }
-
-post {
-        always {
-            echo 'Cleaning up workspace'
-            deleteDir() // Clean up the workspace after the build
-        }
-        success {
-            echo 'Build succeeded!!'
-            // You could add notification steps here, e.g., send an email
-        }
-        failure {
-            echo 'Build failed!!'
-            // You could add notification steps here, e.g., send an email or Slack message
-        }
-    }
-    }
-
-
