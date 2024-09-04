@@ -27,7 +27,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker build -t shopping-cart:latest .'
+                    sh 'docker build -t shoppingcart .'
                     
                     sh '''
                         docker run -d \
