@@ -38,15 +38,20 @@ pipeline {
     }
 
     post {
-    always {
-        echo 'Cleaning up...'
-        cleanWs() // Clean up the workspace after the build
+        always {
+                echo 'Cleaning up workspace'
+                deleteDir() // Clean up the workspace after the build
+            }
+            success {
+                echo 'Build succeeded!!!'
+                
+            }
+                failure {
+                echo 'Build failed!'
+            }
+        }
     }
-    success {
-        archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true // Archive JAR files
-        junit 'target/surefire-reports/*.xml' // Publish test results
-        echo 'Build succeeded!'
-    }
-    }
+
 }
-}
+
+
