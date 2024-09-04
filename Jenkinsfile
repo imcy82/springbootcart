@@ -26,13 +26,13 @@ pipeline {
 
             stage('Deploy') {
                 steps {
-                    bat 'docker build -t shoppincart .' // Builds the Docker image
+                    bat 'docker build -t shopcart .' // Builds the Docker image
 
                     bat '''
                         docker run -d ^
-                        --name shopping-cart ^
+                        --name shopcart ^
                         -p 8070:8070 ^
-                        shoppingcart:latest
+                        shopcart:latest
                     ''' // Runs the Docker container
             }
         }
