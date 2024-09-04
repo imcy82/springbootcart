@@ -26,17 +26,14 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                script {
-                    sh 'docker build -t shoppingcart .'
-                    
-                    sh '''
-                        docker run -d \
-                        --name shopping-cart \
-                        -p 8070:8070 \
-                        shopping-cart:latest
-                    '''
-                }
-            }
+                bat 'docker build -t shoppincart .' // Builds the Docker image
+
+                bat '''
+                    docker run -d ^
+                    --name shopping-cart ^
+                    -p 8070:8070 ^
+                    shoppingcart:latest
+                ''' // Runs the Docker container
         }
     }
 }
