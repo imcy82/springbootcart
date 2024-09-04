@@ -36,5 +36,17 @@ pipeline {
                 ''' // Runs the Docker container
         }
     }
+
+    post {
+    always {
+        echo 'Cleaning up...'
+        cleanWs() // Clean up the workspace after the build
+    }
+    success {
+        archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true // Archive JAR files
+        junit 'target/surefire-reports/*.xml' // Publish test results
+        echo 'Build succeeded!'
+    }
+    }
 }
 }
