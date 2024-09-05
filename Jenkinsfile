@@ -36,6 +36,7 @@ pipeline {
     }
 
     post {
+
         always {
                 echo 'Cleaning up workspace'
                 deleteDir() // Clean up the workspace after the build
@@ -48,6 +49,7 @@ pipeline {
                 echo 'Build failed!'
             }
         }
+        
 }
 
 
