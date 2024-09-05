@@ -18,7 +18,7 @@ Here, MobaXtreme is used to ssh into and configure each EC2 instance
 ### Install Docker on All 3 VMs
 
 #### Step-by-Step Installation
-### Follow all the step
+
 #### 1. Install prerequisite packages: 
    
 ```bash
